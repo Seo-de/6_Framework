@@ -77,5 +77,16 @@
 		WHERE MEMBER_DEL_FL = 'N'
 		AND MEMBER_EMAIL = #{memberEmail}
 	</select>
+	
+	<!-- 회원가입 -->   <!-- 원래는 이렇게 적어야 함. edu.kh.project.model.vo.Member -->
+											<!-- 별칭을 지정해줌 : Member(mybatis-config.xml) -->
+	<!-- insert / update / delete는 항상 반영된 행의 개수(int type)이 반환되기 때문에
+			 별도의 resultType 지정이 필요 없다! -->
+	<insert id="signUp" parameterType="Member">
+		INSERT INTO "MEMBER"
+		VALUES(SEQ_MEMBER_NO.NEXTVAL, 
+			#{memberEmail}, #{memberPw}, #{memberNickname}, #{memberTel}, #{memberAddress},
+			DEFAULT, DEFAULT, DEFAULT, DEFAULT )
+	</insert>
   
 </mapper>
