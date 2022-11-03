@@ -4,7 +4,9 @@ console.log("main.js loaded");
 const saveId = document.getElementById("saveId");
 
 // radio / checkbox 값이 변할 때 발생하는 이벤트 == change
-saveId.addEventListener("change", function(){
+saveId.addEventListener("change", function(event){
+
+    console.log(event);
 
     // chagne는 체크가 되거나, 해제될 때 이벤트 발생
     // -> 체크되었는지 별도 검사 필요
@@ -57,21 +59,20 @@ function loginValidate(){
         alert("이메일을 입력해주세요");
 
         memberEmail.focus(); // 이메일 input 요소에 초점을 맞춤
-        memberEmail.value = "'"; // 이메일 input 요소에 작성된 값을 모두 삭제
+        memberEmail.value = ""; // 이메일 input 요소에 작성된 값을 모두 삭제
         return false;
     }
 
  
-
     if(memberPw.value.trim().length == 0){
         // 이메일 양쪽 동백을 제거한 후 길이가 0인 경우
         // == 이메일 미작성
 
         alert("비밀번호를 입력해주세요");
 
-        memberPw(); // 이메일 input 요소에 초점을 맞춤
-        memberPw.value = "'"; // 이메일 input 요소에 작성된 값을 모두 삭제
+        memberPw.focus(); // 이메일 input 요소에 초점을 맞춤
+        memberPw.value = ""; // 이메일 input 요소에 작성된 값을 모두 삭제
         return false;
     }
-    return false;
+    return true;
 }

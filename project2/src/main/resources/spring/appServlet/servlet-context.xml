@@ -30,6 +30,8 @@
 	<!-- /webapp/resources 폴더 경로를 웹에서 요청했을 때 접근 가능하게 하는 태그 -->
 	<resources mapping="/resources/**" location="/resources/" />
 
+	<!-- favicon 추가 -->
+	<resources mapping="/favicon.ico" location="/resources/images/favicon.ico" />
 
 	<!-- View Resolver 객체(bean) 생성 구문 -->
 	<!-- Controller에서 반환된 값 앞/뒤에 prefix / suffix를 붙여 

@@ -92,5 +92,6 @@
             }).open();
         }
     </script>
+    <script scr="/resources/js/member/myPage.js"></script>
 </body>
 </html>
