@@ -139,6 +139,11 @@
             }).open();
         }
     </script>
+
+    <!-- JQuery 라이브러리(.js 파일) 추가 -->
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <!-- CDN 방식이래 contents delivery network -> 근데 권장하지는 않아서 다운 받아서 js파일에 넣어두는 방식을 쓴데 -->
+
     <script src="/resources/js/member/signUp.js"></script>
 </body>
 </html>
