@@ -449,3 +449,16 @@ labe[for='header-menu-toggle']:hover{
     margin: 0;
     color: gray;
 }
+
+
+#content-1-2{
+    width: 400px;
+    margin: 50px auto;
+}
+
+.secession{
+    background-color: rgba(255, 0, 0, 0.401);
+}
+.secession>td:first-of-type{
+    text-decoration: line-through; /* 가운데 선 긋기 */
+}

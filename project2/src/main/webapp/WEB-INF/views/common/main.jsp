@@ -16,18 +16,68 @@
         <script src="https://kit.fontawesome.com/f7459b8054.js" crossorigin="anonymous"></script>
 </head>
 <body>
-     <main>
+    <main>
 
         <%-- header.jsp 추가(포함) --%>
         <%-- jsp 액션 태그 중 include
-             - 해당 위치에 page 속성으로 지정된 jsp 파일의 내용이 포함됨.
-             - jsp 파일의 경로는 /webapp 폴더를 기준으로 작성. --%>
+            - 해당 위치에 page 속성으로 지정된 jsp 파일의 내용이 포함됨.
+            - jsp 파일의 경로는 /webapp 폴더를 기준으로 작성. --%>
         <jsp:include page="/WEB-INF/views/common/header.jsp" />
         
 
         <section class="content">
             <section class="content-1">
-                ${loginMember}
+                <div>
+                    <h3>이메일로 회원 정보 조회(AJAX)</h3>
+
+                    이메일 : <input type="text" id="inputEmail">
+                    <button id="selectEmail">조회</button>
+
+                    <div id="content-1-2">
+                        <h3>10초마다 모든 회원 정보 조회(AJAX)</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>회원 번호</th>
+                                    <th>이메일</th>
+                                    <th>탈퇴여부</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="tbody">
+                                <%-- <tr>
+                                    <th>1</th>
+                                    <td>user01@kh.or.kr</td>
+                                    <td>N</td>
+                                </tr>
+                                <tr>
+                                    <th>2</th>
+                                    <td>user02@kh.or.kr</td>
+                                    <td>Y</td>
+                                </tr> --%>
+                            </tbody>
+
+                            <tfoot>
+                                <tr>
+                                    <th>회원 수</th>
+                                    <th colspan="2" id="memberCount"><%-- 2명 --%></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    
+                    <%-- <!-- 일치하는 이메일이 있을 경우 -->
+                    <ul>
+                        <li>회원번호 : 1</li>
+                        <li>이메일 : user01@kh.or.kr</li>
+                        <li>닉네임 : 유저일</li>
+                        <li>주소 : 04510,,서울시 ~~~,,~~</li>
+                        <li>가입일 : 2022년 10월 18일</li>
+                    </ul> --%>
+
+                    <%-- <!-- 일치하는 이메일이 없을 경우 -->
+                    <h4>user01@kh.or.kr은 존재하지 않습니다.</h4> --%>
+                </div>
             </section>
             <section class="content-2">
 
@@ -113,6 +163,8 @@
     <%-- footer.jsp 포함 --%>
     <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 
+    <!-- JQuery CDN 방식으로 추가 -->
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
     <script src="/resources/js/main.js"></script>
 </body>
 </html>
