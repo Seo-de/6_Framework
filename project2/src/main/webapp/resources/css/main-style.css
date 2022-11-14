@@ -145,6 +145,7 @@ nav{
     /* 어디 고정할 지 지정 */
     top: 0;
     background-color: white;
+    z-index: 5000;
 }
 
 

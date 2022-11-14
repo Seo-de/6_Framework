@@ -64,4 +64,12 @@
   </update>
   
   
+  <!-- 프로필 이미지 수정 -->
+  <update id="updateProfile" parameterType="Member">
+  	UPDATE "MEMBER" SET
+  	PROFILE_IMG = #{profileImage}
+  	WHERE MEMBER_NO = #{memberNo}
+  </update>
+  
+  
 </mapper>
