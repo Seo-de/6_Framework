@@ -48,4 +48,15 @@ public class BoardServiceImpl implements BoardService{
 		
 		return map;
 	}
+
+	/**
+	 * 게시글 상세 조회
+	 * 게시글 상세 조회 + 이미지 목록 조회 + 댓글 목록 조회
+	 */
+	@Override
+	public Board selectBoardDetail(int boardNo) {
+		
+		// select를 3번 진행해야 하는데 dao를 3번 불러내는 게 아니라 마이바티스를 이용할거래.
+		return dao.selectBoardDetail(boardNo);
+	}
 }

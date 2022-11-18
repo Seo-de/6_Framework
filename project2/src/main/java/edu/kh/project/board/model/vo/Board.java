@@ -1,5 +1,7 @@
 package edu.kh.project.board.model.vo;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -23,4 +25,10 @@ public class Board {
     private int memberNo;
     private String profileImage;
 	
+    // 이미지 목록을 나타내는 리스트
+    private List<BoardImage> imageList;
+    
+    // 댓글 목록을 나타내는 리스트
+    private List<Comment> commentList;
+    
 }
