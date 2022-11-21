@@ -63,9 +63,9 @@
                                             <img class="list-thumbnail" src="${board.thumbnail}"> 
                                         </c:if>
 
-                                        <!-- /board/1/1500 
-                                            /board/{boardCode}/{boardNo}-->
-                                        <a href="/board/${boardCode}/${board.boardNo}">${board.boardTitle}</a>   
+                                        <!-- /board/1/1500?cp=1 
+                                            /board/{boardCode}/{boardNo}?cp=${pagination.currentPage} -->
+                                        <a href="/board/${boardCode}/${board.boardNo}?cp=${pagination.currentPage}">${board.boardTitle}</a>   
                                         [${board.commentCount}]                        
                                     </td>
                                     <td>${board.memberNickname}</td>
@@ -159,6 +159,8 @@
 
     <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 
+    
     <script src="/resources/js/board/boardList.js"></script>
+
 </body>
 </html>
