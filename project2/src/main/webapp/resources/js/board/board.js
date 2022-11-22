@@ -81,3 +81,15 @@ boardLike.addEventListener("click", e=>{
     }
 
 });
+
+
+// 게시글 삭제
+const deleteBtn = document.getElementById("deleteBtn");
+deleteBtn.addEventListener("click", ()=>{
+
+    if(confirm("정말 삭제하시겠습니까?")){
+        // /board/{boardCode}/{boardNo}/delete GET 방식 요청
+        location.href = location.pathname+"/delete";
+                    // /board/1/1993/delete
+    }
+});

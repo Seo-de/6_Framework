@@ -1,24 +1,31 @@
 package edu.kh.project.board.controller;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.kh.project.board.model.service.BoardService;
 import edu.kh.project.board.model.vo.Board;
@@ -235,7 +242,96 @@ public class BoardController {
    // 트랜잭셔널을 사용하는 경우는 
    // dao를 여러개를 사용할 때 쓴데.
    // 하나만 DML 할때는 성능저하가 될 수도 있으니까 생략한데.
+   
+   
+   
+   // 게시글 삭제
+   @GetMapping("board/{boardCode}/{boardNo}/delete")
+   public String boardDelete(@RequestHeader("referer") String referer,
+		   @PathVariable("boardCode") int boardCode, @PathVariable("boardNo")int boardNo,
+		   RedirectAttributes ra) {
+	   
+	   // 게시글 번호를 이용해서 게시글을 삭제(BOARD_DEL_FL = 'Y' 수정)
+	   int result = service.boardDelete(boardNo);
+	   
+	   String message = null;
+	   String path = null;
+	   
+	   if(result>0) {
+		   // 성공 시 : "삭제되었습니다" 메세지 전달
+		   // 해당 게시판 목록 1페이지로 리다이렉트
+		   
+		   message = "삭제되었습니다.";
+		   path = "/board/"+boardCode;
+	   }else {
+		   // 실패 시 : "게시글 삭제 실패" 메세지 전달
+		   // 요청 이전 주소(referer)로 리다이렉트
+		   
+		   message = "게시글 삭제 실패";
+		   path = referer;
+	   }
+	   
+	  ra.addFlashAttribute("message", message);
+	   
+	   return "redirect:"+path;
+   }
+   
+   
+   
+   // 게시글 작성 페이지 이동
+   @GetMapping("/write/{boardCode}")
+   public String boardWrite(@PathVariable("boardCode")int boardCode) {
+	   
+	   return "board/boardWrite";
+   }
+	   
+	   
 	
+   // 게시글 작성
+   @PostMapping("/write/{boardCode}") // multipart는 무조건 post만 가능
+   public String boardWrite(
+		   Board board,
+		   @RequestParam(value="images", required=false) List<MultipartFile> imageList,
+		   @SessionAttribute("loginMember") Member loginMember,
+		   @PathVariable("boardCode") int boardCode,
+		   RedirectAttributes ra, 
+		   HttpSession session,// 어느 파일에 저장할지의 경로
+		   @RequestHeader("referer") String referer) throws IOException {
+	   
+	   // 1. boardCode를 board객체에 세팅(Board VO에 boardCode 필드 추가)
+	   board.setBoardCode(boardCode);
+	   
+	   // 2. 로그인한 회원의 번호를 board 객체에 세팅
+	   board.setMemberNo(loginMember.getMemberNo());
+	   
+	   // 3. 업로드 된 파일의 웹 접근경로 / 서버 내부 경로를 변수에 저장
+	   String webPath = "/resources/images/board/";
+	   String folderPath = session.getServletContext().getRealPath(webPath); // 어플리케이션 스코프래
+	   // -> /resources/images/board/ 까지의 실제 컴퓨터 저장 경로 반환
+	   
+	   // 4. 게시글 삽입 서비스 호출 
+	   // -> 내가 쓴 게시글 화면이 보여야 되는거니까 boardNo를 받아올거래.
+	   int boardNo = service.boardWrite(board, imageList, webPath, folderPath); 
+	   
+	   String message = null;
+	   String path = null;
+	   
+	   if(boardNo > 0) {
+		   message = "게시글이 등록되었습니다.";
+		   path  = "/board/"+boardCode+"/"+boardNo;
+		   		//  /board/1/2004 (상세조회 요청 주소)
+	   }else {
+		   message = "게시글 작성 실패";
+		   path = referer;
+	   }
+	   
+	   ra.addFlashAttribute("message", message);
+	   
+	   return "redirect:"+path;
+   }
+	   
+	   
+	   
 }
 
 

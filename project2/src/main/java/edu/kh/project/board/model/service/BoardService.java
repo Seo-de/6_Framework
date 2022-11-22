@@ -1,7 +1,10 @@
 package edu.kh.project.board.model.service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import edu.kh.project.board.model.vo.Board;
 
@@ -42,4 +45,16 @@ public interface BoardService {
 
 	// 좋아요 수 감소
 	int boardLikeDown(Map<String, Object> paramMap);
+
+	// 게시글 삭제
+	int boardDelete(int boardNo);
+
+	/** 게시글 삽입
+	 * @param board
+	 * @param imageList
+	 * @param webPath
+	 * @param folderPath
+	 * @return boardNo
+	 */
+	int boardWrite(Board board, List<MultipartFile> imageList, String webPath, String folderPath) throws IOException;
 }
