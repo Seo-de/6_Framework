@@ -37,4 +37,10 @@ public class Util {
 	   public static String newLineHandling(String content) {
 		   return content.replaceAll("(\r\n|\n|\r|\n\r)", "<br>");
 	   }
+	   
+	   
+	   // 개행 문자 처리 해제
+	   public static String newLineClear(String content) {
+		   return content.replaceAll("<br>", "\n");
+	   }
 }

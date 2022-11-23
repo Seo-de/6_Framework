@@ -222,7 +222,6 @@
   	<selectKey keyProperty="boardNo" resultType="_int" order='BEFORE'>
   		SELECT SEQ_BOARD_NO.NEXTVAL FROM DUAL
   	</selectKey>
-  
   	INSERT INTO BOARD
 		VALUES(#{boardNo}, #{boardTitle}, #{boardContent},
 		    DEFAULT, DEFAULT, DEFAULT, DEFAULT, #{memberNo}, #{boardCode} )
@@ -256,7 +255,50 @@
 		</foreach>
 		
   </insert>
+  
+  
+  <!-- 게시글 수정 -->
+  <update id="boardUpdate">
+  	UPDATE BOARD SET
+		BOARD_TITLE = #{boardTitle},
+		BOARD_CONTENT = #{boardContent}
+		WHERE BOARD_NO = #{boardNo}
+  </update>
+  
+  
+  <!-- 게시글 이미지 삭제 -->
+  <!-- 
+  	마이바티스에서 전달된 값 쓰는 방법 2가지 있음
+  	1) #{key} == 'value' (양쪽에 홑따옴표''가 추가)
+  		-> 대입되는 값에 써서 조건절 값에 썼어
+  		-> PreparedStatement (삽입, 조건절 값)
+  		
+  	2) ${key} == value (따옴표 X)
+  		-> 값으로 쓸 수도 있고, sql 일부로 쓸 수도 있음
+  		-> Statement (SQL 일부 표현 시 사용)
+   -->
+  <delete id="boardImageDelete">
+  	DELETE FROM BOARD_IMG
+  	${condition}
+  </delete>
+  
+  
+  <!-- 이미지 수정 -->
+  <update id="boardImageUpdate">
+  	UPDATE BOARD_IMG SET
+  	IMG_RENAME = #{imageReName},
+  	IMG_ORIGINAL = #{imageOriginal}
+  	WHERE BOARD_NO = #{boardNo}
+  	AND IMG_ORDER = #{imageOrder}
+  </update>
 	
   
+  <!-- 이미지 삽입 -->
+  <insert id="boardImageInsert">
+  	INSERT INTO BOARD_IMG
+  	VALUES(SEQ_IMG_NO.NEXTVAL, 
+  		#{imagePath}, #{imageReName}, #{imageOriginal},
+  		#{imageOrder}, #{boardNo})
+  </insert>
   
 </mapper>
