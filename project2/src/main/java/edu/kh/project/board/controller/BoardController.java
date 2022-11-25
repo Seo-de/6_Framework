@@ -55,15 +55,24 @@ public class BoardController {
 	@GetMapping("/board/{boardCode}") // 이걸 여러개 작성이 가능해서 어떤 pathvariable을 꺼낼 지 적어주는 거래
 	public String selectBoardList(@PathVariable("boardCode") int boardCode,
 			Model model,
-			@RequestParam(value="cp", required=false, defaultValue="1") int cp) {
+			@RequestParam(value="cp", required=false, defaultValue="1") int cp,
+			@RequestParam Map<String, Object> pm) {
 		
 		// Model : 값 전달용 객체
 		// model.addAttribute("K":V) : request scope에 세팅
 		//								-> forward 시 유지됨(session에 안올려도 돼)
 		
-		Map<String, Object> map = service.selectBoardList(boardCode, cp);
-		
-		model.addAttribute("map", map); // request scope 세팅
+		if(pm.get("key")==null) { // 검색이 아닌 경우
+			Map<String, Object> map = service.selectBoardList(boardCode, cp);
+			
+			model.addAttribute("map", map); // request scope 세팅
+			
+		}else { // 검색인 경우
+			pm.put("boardCode", boardCode); // 게시판 번호를 pm에 추가
+			// pm == {boardCode, key, query, xp} 가 담겨있데.
+			Map<String, Object> map = service.selectBoardList(pm, cp);
+			model.addAttribute("map", map);
+		}
 		
 		return "board/boardList"; // forward
 	}

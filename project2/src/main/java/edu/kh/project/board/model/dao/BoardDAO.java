@@ -160,4 +160,27 @@ public class BoardDAO {
 		return sqlSession.insert("boardMapper.boardImageInsert", img);
 	}
 
+	/** 검색 조건이 일치하는 게시글 수 조회
+	 * @param pm
+	 * @return listCount
+	 */
+	public int getListcount(Map<String, Object> pm) {
+		return sqlSession.selectOne("boardMapper.getListCount_search", pm);
+	}
+
+	/** 검색 조건이 일치하는 게시글 목록 조회
+	 * @param pagination
+	 * @param pm
+	 * @return boardList
+	 */
+	public List<Board> selectBoardList(Pagination pagination, Map<String, Object> pm) {
+		
+		// 건너 뛸 수 
+		int offset = (pagination.getCurrentPage()-1)*pagination.getLimit();
+		
+		// 몇 행만 조회할지 검색하는 거
+		RowBounds rowBounds = new RowBounds(offset, pagination.getLimit());
+		return sqlSession.selectList("boardMapper.selectBoardList_search", pm, rowBounds);
+	}
+
 }
