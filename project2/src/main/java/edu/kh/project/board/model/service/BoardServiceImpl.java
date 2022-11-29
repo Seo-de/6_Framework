@@ -338,6 +338,13 @@ public class BoardServiceImpl implements BoardService{
 		
 		return map;
 	}
+
+	
+	// 이미지 목록 조회
+	@Override
+	public List<String> seletImageList() {
+		return dao.selectImageList();
+	}
 	
 	
 	
