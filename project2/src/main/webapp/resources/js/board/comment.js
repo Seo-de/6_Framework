@@ -235,7 +235,7 @@ function showUpdateComment(commentNo, btn){
 
             temp[0].parentElement.innerHTML = beforeCommentRow;
             // comment-row                       // 백업한 댓글
-            // 백업 내용으로 덮어 씌워 지면서 textarea 사라짐
+            // 백업 내용으로 덮어 씌ㅌ워 지면서 textarea 사라짐
        
         }else{ // 취소
             return;
